@@ -1,39 +1,88 @@
-# Задача 22: Даны два неупорядоченных набора целых чисел (может быть, с повторениями). 
-# Выдать без повторений в порядке возрастания все те числа, которые встречаются в обоих наборах.
-# Пользователь вводит 2 числа. n — кол-во элементов первого множества. m — кол-во элементов второго множества. 
-# Затем пользователь вводит сами элементы множеств.
+# Показывает информацию в файле
+def show_data(filename):
+print("\nПП | ФИО | Телефон")
+with open(filename, r, encoding-=utf-8″) as data:
+print(data.read())
+print("")
 
-# from random import randint
-# n_set = set(randint(1, 20) for i in range(int(input('Введите кол-во элементов первого множества: '))))
-# print(n_set)
-# m_set = set(randint(1, 20) for i in range(int(input('Введите кол-во элементов второго множества: '))))
-# print(m_set)
-# s_set = sorted(n_set.intersection(m_set))
-# print(*s_set)
+# Записывает информацию в файл
+def export_data(filename):
+with open(filename, «r», encoding=»utf-8″) as data:
+tel_file = data.read()
+num = len(tel_file.split("\n"))
+with open(filename, «a», encoding=»utf-8″) as data:
+fio = input(«Введите ФИО: «)
+phone_number = input(«Введите номер телефона: «)
+data.write(f»{num} | {fio} | {phone_number}"\n")
+print(f»Добавлена запись : {num} | {fio} | {phone_number}"\n")
 
+# Изменяет информацию из файла
+def edit_data(filename):
+print("\nПП | ФИО | Телефон")
+with open(filename, «r», encoding=’utf-8′) as data:
+tel_book = data.read()
+print(tel_book)
+print(«»)
+index_delete_data = int(input(«Введите номер строки для редактирования: «)) — 1
+tel_book_lines = tel_book.split("\n")
+edit_tel_book_lines = tel_book_lines[index_delete_data]
+elements = edit_tel_book_lines.split(» | «)
+fio = input(«Введите ФИО: «)
+phone = input(«Введите номер телефона: «)
+num = elements[0]
+if len(fio) == 0:
+fio = elements[1]
+if len(phone) == 0:
+phone = elements[2]
+edited_line = f»{num} | {fio} | {phone}»
+tel_book_lines[index_delete_data] = edited_line
+print(f»Запись — {edit_tel_book_lines}, изменена на — {edited_line}"\n")
+with open(filename, «w», encoding=’utf-8′) as f:
+f.write("\n».join(tel_book_lines))
 
+# Удаляет информацию из файла
+def delete_data(filename):
+print("\nПП | ФИО | Телефон")
+with open(filename, «r», encoding=»utf-8″) as data:
+tel_book = data.read()
+print(tel_book)
+print(«»)
+index_delete_data = int(input(«Введите номер строки для удаления: «)) — 1
+tel_book_lines = tel_book.split("\n")
+del_tel_book_lines = tel_book_lines[index_delete_data]
+tel_book_lines.pop(index_delete_data)
+print(f»Удалена запись: {del_tel_book_lines}"\n")
+with open(filename, «w», encoding=’utf-8′) as data:
+data.write("\n».join(tel_book_lines))
 
+def main():
+my_choice = -1
+file_tel = «tel.txt»
 
+# Создает файл если его нет в папке
+with open(file_tel, «a», encoding=»utf-8″) as file:
+file.write(«»)
 
-# Задача 24: В фермерском хозяйстве в Карелии выращивают чернику. Она растёт на круглой грядке, 
-# причём кусты высажены только по окружности. Таким образом, у каждого куста есть ровно два соседних. 
-# Всего на грядке растёт N кустов. Эти кусты обладают разной урожайностью, поэтому ко времени сбора на них 
-# выросло различное число ягод — на i-ом кусте выросло ai ягод. В этом фермерском хозяйстве внедрена система 
-# автоматического сбора черники. Эта система состоит из управляющего модуля и нескольких собирающих модулей. Собирающий модуль 
-# за один заход, находясь непосредственно перед некоторым кустом, собирает ягоды с этого куста и с двух соседних с ним.
-# Напишите программу для нахождения максимального числа ягод, которое может собрать за один заход собирающий модуль, 
-# находясь перед некоторым кустом заданной во входном файле грядки.
-
-
-from random import randint
-list_1 = list(randint(1, 5) for i in range(int(input('Введите кол-во кустов: '))))
-print(list_1)
-a = int(input('Введите № куста: '))
-res = 0
-if a == 1:
-    res = list_1[0] + list_1[1] + list_1[-1]
-elif a == len(list_1):
-  res = list_1[-2] + list_1[-1] + list_1[0]
+while my_choice != 0:
+print(«Выберите одно из действий:»)
+print(«1 — Вывести инфо на экран»)
+print(«2 — Произвести экпорт данных»)
+print(«3 — Произвести изменение данных»)
+print(«4 — Произвести удаление данных»)
+print(«0 — Выход из программы»)
+action = int(input(«Действие: «))
+if action == 1:
+show_data(file_tel)
+elif action == 2:
+export_data(file_tel)
+elif action == 3:
+edit_data(file_tel)
+elif action == 4:
+delete_data(file_tel)
 else:
-  res = list_1[a-1] + list_1[a-2] + list_1[a]
-print(res, 'ягод')
+my_choice = 0
+
+print(«До свидания»)
+
+if __name__ == «__main__»:
+main()
