@@ -1,38 +1,88 @@
-# Задача 10: На столе лежат n монеток. Некоторые из них лежат вверх решкой, 
-# а некоторые – гербом. Определите минимальное число монеток, которые нужно 
-# перевернуть, чтобы все монетки были повернуты вверх одной и той же стороной. Выведите минимальное 
-# количество монет, которые нужно перевернуть
+# Показывает информацию в файле
+def show_data(filename):
+print("\nПП | ФИО | Телефон")
+with open(filename, r, encoding-=utf-8″) as data:
+print(data.read())
+print("")
 
-# n = int(input()) 
-# heads = 0 
-# tails = 0 
-# for i in range(n): 
-#     coin = int(input()) 
-#     if coin == 1: 
-#         heads += 1 
-#     else: 
-#         tails += 1 
-# print(min(heads, tails))
+# Записывает информацию в файл
+def export_data(filename):
+with open(filename, «r», encoding=»utf-8″) as data:
+tel_file = data.read()
+num = len(tel_file.split("\n"))
+with open(filename, «a», encoding=»utf-8″) as data:
+fio = input(«Введите ФИО: «)
+phone_number = input(«Введите номер телефона: «)
+data.write(f»{num} | {fio} | {phone_number}"\n")
+print(f»Добавлена запись : {num} | {fio} | {phone_number}"\n")
 
+# Изменяет информацию из файла
+def edit_data(filename):
+print("\nПП | ФИО | Телефон")
+with open(filename, «r», encoding=’utf-8′) as data:
+tel_book = data.read()
+print(tel_book)
+print(«»)
+index_delete_data = int(input(«Введите номер строки для редактирования: «)) — 1
+tel_book_lines = tel_book.split("\n")
+edit_tel_book_lines = tel_book_lines[index_delete_data]
+elements = edit_tel_book_lines.split(» | «)
+fio = input(«Введите ФИО: «)
+phone = input(«Введите номер телефона: «)
+num = elements[0]
+if len(fio) == 0:
+fio = elements[1]
+if len(phone) == 0:
+phone = elements[2]
+edited_line = f»{num} | {fio} | {phone}»
+tel_book_lines[index_delete_data] = edited_line
+print(f»Запись — {edit_tel_book_lines}, изменена на — {edited_line}"\n")
+with open(filename, «w», encoding=’utf-8′) as f:
+f.write("\n».join(tel_book_lines))
 
+# Удаляет информацию из файла
+def delete_data(filename):
+print("\nПП | ФИО | Телефон")
+with open(filename, «r», encoding=»utf-8″) as data:
+tel_book = data.read()
+print(tel_book)
+print(«»)
+index_delete_data = int(input(«Введите номер строки для удаления: «)) — 1
+tel_book_lines = tel_book.split("\n")
+del_tel_book_lines = tel_book_lines[index_delete_data]
+tel_book_lines.pop(index_delete_data)
+print(f»Удалена запись: {del_tel_book_lines}"\n")
+with open(filename, «w», encoding=’utf-8′) as data:
+data.write("\n».join(tel_book_lines))
 
-# Задача 12: Петя и Катя – брат и сестра. Петя – студент, а Катя – школьница. Петя помогает Кате по математике. 
-# Он задумывает два натуральных числа X и Y (X,Y≤1000), а Катя должна их отгадать. Для этого Петя делает две подсказки.
-#  Он называет сумму этих чисел S и их произведение P. Помогите Кате отгадать задуманные Петей числа.
+def main():
+my_choice = -1
+file_tel = «tel.txt»
 
-# s = int(input('Задай сумму двух чисел \n'))
-# p = int(input('Задай произведение чисел \n'))
-# for x in range(s):
-#     for y in range(p):
-#         if s == x + y and p == x * y:
-#             print(f'первое число ="{x}", второе число ="{y}"')
+# Создает файл если его нет в папке
+with open(file_tel, «a», encoding=»utf-8″) as file:
+file.write(«»)
 
+while my_choice != 0:
+print(«Выберите одно из действий:»)
+print(«1 — Вывести инфо на экран»)
+print(«2 — Произвести экпорт данных»)
+print(«3 — Произвести изменение данных»)
+print(«4 — Произвести удаление данных»)
+print(«0 — Выход из программы»)
+action = int(input(«Действие: «))
+if action == 1:
+show_data(file_tel)
+elif action == 2:
+export_data(file_tel)
+elif action == 3:
+edit_data(file_tel)
+elif action == 4:
+delete_data(file_tel)
+else:
+my_choice = 0
 
+print(«До свидания»)
 
-# Задача 14: Требуется вывести все целые степени двойки (т.е. числа вида 2k), не превосходящие числа N.
-
-n = int(input('Введи число N:'))
-i = 0
-while i <= n:
-    print(f' 2 в степени {i} равна {2  }')
-    i += 1
+if __name__ == «__main__»:
+main()
